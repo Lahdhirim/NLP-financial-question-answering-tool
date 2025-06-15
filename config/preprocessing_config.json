@@ -1,0 +1,8 @@
+{
+    "input_data": "data/financial_QA.csv",
+    "test_size": 0.2,
+    "validation_size": 0.2,
+    "training_data_path": "data/financial_QA_train.csv",
+    "validation_data_path": "data/financial_QA_val.csv",
+    "test_data_path": "data/financial_QA_test.csv"
+}
