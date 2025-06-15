@@ -5,6 +5,7 @@ from src.utils.toolbox import load_csv_data
 from src.modeling.dataset import FinancialQADataset
 from transformers import T5TokenizerFast
 from torch.utils.data import DataLoader, RandomSampler
+from src.modeling.model import ModelBuilder
 
 class TrainingPipeline(BasePipeline):    
     def __init__(self, config: TrainingConfig):
@@ -60,7 +61,19 @@ class TrainingPipeline(BasePipeline):
             sampler=RandomSampler(test_dataset),
             batch_size=self.config.model.batch_size
         )
-        print("Example of train batch: ", next(iter(train_loader)))
-        breakpoint()
+
+        # Create the model, optimizer and select device
+        print(f"{Fore.YELLOW}Creating model and optimizer...{Style.RESET_ALL}")
+        model_builder = ModelBuilder(model_name=self.config.model.model_name,
+                                     learning_rate=self.config.model.learning_rate,
+                                     freeze_encoder=self.config.model.freeze_encoder,
+                                     enable_gpu=self.config.model.enable_gpu)
+        model, optimzer, device = model_builder.initialize()
+        model.to(device)
+
+
+
+
+
         
             

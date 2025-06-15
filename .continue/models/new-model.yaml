@@ -1,0 +1,9 @@
+name: New model
+version: 0.0.1
+schema: v1
+models:
+  - provider: ollama
+    model: qwen2.5-coder:1.5b
+    name: qwen2.5-coder:1.5b
+    roles:
+      - autocomplete

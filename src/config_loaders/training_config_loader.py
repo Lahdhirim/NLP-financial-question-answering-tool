@@ -7,6 +7,11 @@ class ModelConfig(BaseModel):
     max_input_length: Optional[int] = Field(..., description="Maximum token length for input question + context")
     max_answer_length: Optional[int] = Field(..., description="Maximum token length for the answer")
     batch_size: int = Field(..., description="Batch size required for Dataloader")
+    model_name: str = Field(default="t5-base", description="Name of the model to use")
+    learning_rate: float = Field(default=1e-4, description="Learning rate for the optimizer")
+    freeze_encoder: bool = Field(default=True, description="Freeze the encoder during training (recommanded to accelerate the training)")
+    enable_gpu: bool = Field(default=True, description="Enable GPU for training")
+
 
 class TrainingConfig(BaseModel):
     training_data_path: str = Field(..., description="Path to load the training data file")
