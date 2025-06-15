@@ -18,7 +18,7 @@ def save_model(model, save_path: str, epoch: int, val_loss: float) -> None:
         "val_loss": val_loss
     }
     torch.save(checkpoint, save_path)
-    print(Fore.YELLOW + f"Model saved at {save_path} with validation loss: {val_loss}." + Style.RESET_ALL)
+    print(Fore.MAGENTA + f"Model saved at {save_path} with validation loss: {val_loss:.4f}." + Style.RESET_ALL)
     return None
 
 def plot_training_and_validation_losses(train_losses: list, val_losses: list, save_path: str) -> None:
@@ -31,4 +31,5 @@ def plot_training_and_validation_losses(train_losses: list, val_losses: list, sa
     plt.legend()
     plt.grid(True)
     plt.savefig(save_path)
-    print(Fore.YELLOW + f"Graph saved at {save_path}." + Style.RESET_ALL)
+    print(Fore.MAGENTA + f"Graph saved at {save_path}." + Style.RESET_ALL)
+    return None

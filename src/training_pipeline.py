@@ -17,7 +17,6 @@ class TrainingPipeline(BasePipeline):
 
         print(f"{Fore.GREEN}Starting training pipeline...{Style.RESET_ALL}")
 
-
         # Load the data
         print(f"{Fore.YELLOW}Loading data to specified paths...{Style.RESET_ALL}")
         train_data = load_csv_data(data_path=self.config.training_data_path)
@@ -130,13 +129,14 @@ class TrainingPipeline(BasePipeline):
                            val_loss=mean_val_loss)
                 lowest_val_loss = mean_val_loss
             
+            # Save the training and validation loss curve after each epoch (to keep track of progress)
+            if len(train_losses) >= 2:
+                print(f"{Fore.YELLOW}Plotting losses...{Style.RESET_ALL}")
+                plot_training_and_validation_losses(train_losses=train_losses,
+                                                val_losses=val_losses,
+                                                save_path=self.config.losses_curve_path)
+            
         print(f"{Fore.GREEN}Training completed with the best validation loss: {lowest_val_loss:.4f}{Style.RESET_ALL}")
-
-        # Plot the training and validation losses
-        print(f"{Fore.YELLOW}Plotting losses...{Style.RESET_ALL}")
-        plot_training_and_validation_losses(train_losses=train_losses,
-                                            val_losses=val_losses,
-                                            save_path=self.config.losses_curve_path)
     
         print(f"{Fore.GREEN}Training pipeline completed successfully!{Style.RESET_ALL}")
         
