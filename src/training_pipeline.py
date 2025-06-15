@@ -18,10 +18,9 @@ class TrainingPipeline(BasePipeline):
         print(f"{Fore.GREEN}Starting training pipeline...{Style.RESET_ALL}")
 
         # Load the data
-        print(f"{Fore.YELLOW}Loading data to specified paths...{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}Loading data from specified paths...{Style.RESET_ALL}")
         train_data = load_csv_data(data_path=self.config.training_data_path)
         validation_data = load_csv_data(data_path=self.config.validation_data_path)
-        test_data = load_csv_data(data_path=self.config.test_data_path)
 
         # Create the dataset objects
         tokenizer = T5TokenizerFast.from_pretrained(self.config.model.tokenizer_pretrained_model)
@@ -38,12 +37,6 @@ class TrainingPipeline(BasePipeline):
             max_input_length=self.config.model.max_input_length,
             max_answer_length=self.config.model.max_answer_length
         )
-        test_dataset = FinancialQADataset(
-            tokenizer=tokenizer,
-            data=test_data,
-            max_input_length=self.config.model.max_input_length,
-            max_answer_length=self.config.model.max_answer_length
-        )
 
         # Create the DataLoader objects
         print(f"{Fore.YELLOW}Creating DataLoader objects...{Style.RESET_ALL}")
@@ -55,11 +48,6 @@ class TrainingPipeline(BasePipeline):
         validation_loader = DataLoader(
             validation_dataset,
             sampler=RandomSampler(validation_dataset),
-            batch_size=self.config.model.batch_size
-        )
-        test_loader = DataLoader(
-            test_dataset,
-            sampler=RandomSampler(test_dataset),
             batch_size=self.config.model.batch_size
         )
 
@@ -123,10 +111,17 @@ class TrainingPipeline(BasePipeline):
 
             # Save the model with the lowest validation loss
             if lowest_val_loss is None or mean_val_loss < lowest_val_loss:
-                save_model(model=model, 
+                save_model(model=model,
+                           model_name=self.config.model.model_name,
+                           tokenizer_pretrained_model=self.config.model.tokenizer_pretrained_model,
                            save_path=self.config.best_model_path, 
                            epoch=epoch,
-                           val_loss=mean_val_loss)
+                           val_loss=mean_val_loss,
+                           max_input_length=self.config.model.max_input_length,
+                           max_answer_length=self.config.model.max_answer_length
+                           )
+
+
                 lowest_val_loss = mean_val_loss
             
             # Save the training and validation loss curve after each epoch (to keep track of progress)
@@ -137,21 +132,4 @@ class TrainingPipeline(BasePipeline):
                                                 save_path=self.config.losses_curve_path)
             
         print(f"{Fore.GREEN}Training completed with the best validation loss: {lowest_val_loss:.4f}{Style.RESET_ALL}")
-    
         print(f"{Fore.GREEN}Training pipeline completed successfully!{Style.RESET_ALL}")
-        
-
-
-        
-
-
-
-
-        
-
-
-
-
-
-        
-            

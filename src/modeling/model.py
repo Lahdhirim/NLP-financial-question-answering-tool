@@ -1,8 +1,8 @@
-import torch
 from torch import nn
 from torch.optim import Adam
 from transformers import T5ForConditionalGeneration
 from colorama import Fore, Style
+from src.utils.toolbox import choose_device
 
 class ModelBuilder:
     def __init__(
@@ -22,10 +22,6 @@ class ModelBuilder:
         for name, param in model.named_parameters():
             if param.requires_grad:
                 print(f" - {name}")
-    
-    @staticmethod
-    def _print_selected_device(device) -> None:
-        print(f"{Fore.CYAN}Using device: {device}{Style.RESET_ALL}")
 
     def build_model(self) -> nn.Module:
         # Load model
@@ -48,20 +44,11 @@ class ModelBuilder:
         trainable_params = filter(lambda p: p.requires_grad, model.parameters())
         optimizer = Adam(trainable_params, lr=self.learning_rate)
         return optimizer
-
-    def choose_device(self):
-        if self.enable_gpu and torch.cuda.is_available():
-            device = torch.device("cuda")
-        else:
-            device = torch.device("cpu")
-        self._print_selected_device(device)
-
-        return device
     
     def initialize(self):
         model = self.build_model()
-        optimizer = self.build_optimizer(model)
-        device = self.choose_device()
+        optimizer = self.build_optimizer(model=model)
+        device = choose_device(enable_gpu=self.enable_gpu)
         return model, optimizer, device
 
 

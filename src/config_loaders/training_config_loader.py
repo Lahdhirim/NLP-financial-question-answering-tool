@@ -16,7 +16,6 @@ class ModelConfig(BaseModel):
 class TrainingConfig(BaseModel):
     training_data_path: str = Field(..., description="Path to load the training data file")
     validation_data_path: str = Field(..., description="Path to load the validation data file")
-    test_data_path: str = Field(..., description="Path to load the test data file")
     model: ModelConfig = Field(..., description="Model-related configuration")
     n_epochs: int = Field(..., description="Number of epochs for training the model")
     best_model_path: str = Field(..., description="Path to save the best model during training")

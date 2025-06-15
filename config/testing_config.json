@@ -1,0 +1,6 @@
+{
+    "test_data_path": "data/financial_QA_test.csv",
+    "trained_model_path": "trained_models/t5_model.pth",
+    "enable_gpu": true,
+    "batch_size": 8
+}
