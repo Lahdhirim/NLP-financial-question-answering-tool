@@ -1,4 +1,5 @@
 import argparse
+import subprocess
 
 # Import config loaders and pipeline classes for each task
 from src.config_loaders.preprocessing_config_loader import preprocessing_config_loader
@@ -14,7 +15,7 @@ if __name__ == "__main__":
     """
     Main script for running the Financial QA Tool in different operational modes.
 
-    This script provides a command-line interface to perform various tasks related to data preprocessing, model training, evaluation, and inference.
+    This script provides a command-line interface to perform various tasks related to data preprocessing, model training, testing, and inference.
     Depending on the selected mode, it loads the appropriate configuration and executes the corresponding pipeline.
     """
 
@@ -43,6 +44,10 @@ if __name__ == "__main__":
         testing_config = testing_config_loader(config_path="config/testing_config.json")
         testing_pipeline = TestingPipeline(config=testing_config)
         testing_pipeline.run()
+    
+    elif args.mode == "inference":
+        # Launch the web app for inference
+        subprocess.run(["python", "src/web_app/app.py"])
     
     else:
         print("Invalid mode. Please choose 'process_data', 'train', 'test', or 'inference'.")

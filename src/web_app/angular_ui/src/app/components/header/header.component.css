@@ -1,0 +1,33 @@
+header {
+  background-color: rgb(8, 26, 60);
+  color: #edf2f7;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px solid #2b6cb0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #f7fafc;
+}
+
+header a {
+  display: flex;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+header a:hover {
+  transform: scale(1.05);
+}
+
+header img {
+  width: 40px;
+  height: 40px;
+  filter: brightness(1.2);
+}

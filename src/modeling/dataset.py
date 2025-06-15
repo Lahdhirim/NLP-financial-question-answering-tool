@@ -18,12 +18,12 @@ class FinancialQADataset(Dataset):
         context = self.data.iloc[idx][DataSchema.CONTEXT]
         answer = self.data.iloc[idx][DataSchema.ANSWER]
         
-        question_tokenized = self.tokenizer(question, context, max_length=self.max_input_length, padding="max_length", truncation=True)
+        input_tokenized = self.tokenizer(question, context, max_length=self.max_input_length, padding="max_length", truncation=True)
         answer_tokenized  = self.tokenizer(answer, max_length=self.max_answer_length, padding="max_length", truncation=True)
         
         return {
-            ModelSchema.INPUT_IDS: torch.tensor(question_tokenized["input_ids"], dtype=torch.long),
-            ModelSchema.ENCODER_MASK: torch.tensor(question_tokenized["attention_mask"], dtype=torch.long),
+            ModelSchema.INPUT_IDS: torch.tensor(input_tokenized["input_ids"], dtype=torch.long),
+            ModelSchema.ENCODER_MASK: torch.tensor(input_tokenized["attention_mask"], dtype=torch.long),
             ModelSchema.LABELS: torch.tensor(answer_tokenized["input_ids"], dtype=torch.long),
             ModelSchema.DECODER_MASK: torch.tensor(answer_tokenized["attention_mask"], dtype=torch.long)}
     

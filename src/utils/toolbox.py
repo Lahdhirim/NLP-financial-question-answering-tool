@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from src.utils.schema import CheckpointSchema
 from typing import Tuple
 from transformers import PreTrainedTokenizerBase, T5TokenizerFast, T5ForConditionalGeneration
+import os
 
 def load_csv_data(data_path: str) -> pd.DataFrame:
         try :
@@ -36,6 +37,7 @@ def save_model(
         CheckpointSchema.MAX_INPUT_LENGTH: max_input_length,
         CheckpointSchema.MAX_ANSWER_LENGTH: max_answer_length
     }
+    os.makedirs(os.path.dirname(save_path), exist_ok=True)
     torch.save(checkpoint, save_path)
     print(Fore.MAGENTA + f"Model saved at {save_path} with validation loss: {val_loss:.4f}." + Style.RESET_ALL)
     return None
