@@ -1,3 +1,11 @@
 {
-    "input_data": "data/financial_QA.csv"
+    "training_data_path": "data/financial_QA_train.csv",
+    "validation_data_path": "data/financial_QA_val.csv",
+    "test_data_path": "data/financial_QA_test.csv",
+    "model": {
+        "tokenizer_pretrained_model": "t5-base",
+        "max_input_length": 256,
+        "max_answer_length": 128,
+        "batch_size": 8
+    }
 }
