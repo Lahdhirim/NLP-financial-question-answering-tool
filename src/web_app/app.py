@@ -20,7 +20,6 @@ def run_angular_ui():
     angular_process = subprocess.Popen(
         ["ng", "serve", "--open"], cwd="src/web_app/angular_ui", shell=True)
 
-TRAINED_MODELS_PATH = "trained_models/t5_model.pth"
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
@@ -36,9 +35,7 @@ def predict():
         context = data[DataSchema.CONTEXT]
         question = data[DataSchema.QUESTION]
 
-        # Load the trained model and tokenizer then generate the answer
-        # [HIGH]: load the model only once at the beginning of the application
-        model, tokenizer, max_input_length, max_answer_length = load_trained_model(save_path=TRAINED_MODELS_PATH)
+        # Generate the answer        
         input_tokenized = tokenizer(question, context, max_length=max_input_length, padding="max_length", truncation=True)
         input_ids = torch.tensor(input_tokenized["input_ids"], dtype=torch.long)
         attention_mask = torch.tensor(input_tokenized["attention_mask"], dtype=torch.long)
@@ -72,7 +69,15 @@ def shutdown():
         return {"message": str(e)}, 500
 
 if __name__ == "__main__":
+
+    # Load the trained model
+    TRAINED_MODELS_PATH = "trained_models/t5_model.pth"
+    model, tokenizer, max_input_length, max_answer_length = load_trained_model(save_path=TRAINED_MODELS_PATH)
+
+    # Run the Angular UI server
     run_angular_ui()
+
+    # Start the Flask server
     app.run(port=5000, host="127.0.0.1")
 
 
