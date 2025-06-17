@@ -11,7 +11,7 @@
         "freeze_encoder": true,
         "enable_gpu": true
     },
-    "n_epochs": 2,
+    "n_epochs": 40,
     "best_model_path": "trained_models/t5_model.pth",
     "losses_curve_path": "figs/training_validation_loss_curve.png"
 }
