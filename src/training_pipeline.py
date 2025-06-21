@@ -4,7 +4,7 @@ from src.base_pipeline import BasePipeline
 from src.utils.toolbox import load_csv_data, save_model, plot_training_and_validation_losses
 from src.modeling.dataset import FinancialQADataset
 from transformers import T5TokenizerFast
-from torch.utils.data import DataLoader, RandomSampler
+from torch.utils.data import DataLoader
 from src.modeling.model import ModelBuilder
 from src.utils.schema import ModelSchema
 import torch
@@ -42,12 +42,12 @@ class TrainingPipeline(BasePipeline):
         print(f"{Fore.YELLOW}Creating DataLoader objects...{Style.RESET_ALL}")
         train_loader = DataLoader(
             train_dataset,
-            sampler=RandomSampler(train_dataset),
+            shuffle=True,
             batch_size=self.config.model.batch_size
         )
         validation_loader = DataLoader(
             validation_dataset,
-            sampler=RandomSampler(validation_dataset),
+            shuffle=True,
             batch_size=self.config.model.batch_size
         )
 
@@ -61,13 +61,13 @@ class TrainingPipeline(BasePipeline):
         model.to(device)
 
         # Train the model
-        print(f"{Fore.YELLOW}Starting training loop...{Style.RESET_ALL}")
+        print(f"{Fore.YELLOW}Starting the training loop...{Style.RESET_ALL}")
 
         lowest_val_loss = None
         train_losses = []
         val_losses = []
-
         n_epochs = self.config.n_epochs
+
         for epoch in range(n_epochs):
             print(f"{Fore.YELLOW}Epoch {epoch}...{Style.RESET_ALL}")
 
@@ -120,8 +120,6 @@ class TrainingPipeline(BasePipeline):
                            max_input_length=self.config.model.max_input_length,
                            max_answer_length=self.config.model.max_answer_length
                            )
-
-
                 lowest_val_loss = mean_val_loss
             
             # Save the training and validation loss curve after each epoch (to keep track of progress)

@@ -3,8 +3,8 @@ from pydantic import BaseModel, Field
 
 class PreprocessingConfig(BaseModel):
     input_data: str = Field(..., description="Path to the input data file")
-    test_size: float = Field(0.2, description="Proportion of the dataset to include in the test split")
-    validation_size: float = Field(0.2, description="Proportion of the dataset to include in the validation split")
+    test_size: float = Field(default=0.2, description="Proportion of the dataset to include in the test split")
+    validation_size: float = Field(default=0.2, description="Proportion of the dataset to include in the validation split")
     training_data_path: str = Field(..., description="Path to save the training data file")
     validation_data_path: str = Field(..., description="Path to save the validation data file")
     test_data_path: str = Field(..., description="Path to save the test data file")

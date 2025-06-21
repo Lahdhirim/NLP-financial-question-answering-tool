@@ -7,10 +7,10 @@ from src.utils.toolbox import choose_device
 class ModelBuilder:
     def __init__(
         self,
-        model_name: str = "t5-base",
-        learning_rate: float = 1e-4,
-        freeze_encoder: bool = True,
-        enable_gpu: bool = True,
+        model_name: str,
+        learning_rate: float,
+        freeze_encoder: bool,
+        enable_gpu: bool,
     ):
         self.model_name = model_name
         self.learning_rate = learning_rate
@@ -24,7 +24,7 @@ class ModelBuilder:
                 print(f" - {name}")
 
     def build_model(self) -> nn.Module:
-        # Load model
+        # Load the model
         model = T5ForConditionalGeneration.from_pretrained(
             self.model_name,
             return_dict=True
