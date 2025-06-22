@@ -51,12 +51,3 @@ class ModelBuilder:
         device = choose_device(enable_gpu=self.enable_gpu)
         return model, optimizer, device
 
-
-
-
-
-
-
-
-    
-
