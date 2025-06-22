@@ -8,13 +8,13 @@ from transformers import PreTrainedTokenizerBase, T5TokenizerFast, T5ForConditio
 import os
 
 def load_csv_data(data_path: str) -> pd.DataFrame:
-        try :
-            data = pd.read_csv(data_path)
-            return data
-        except FileNotFoundError:
-            raise FileNotFoundError(
-                Fore.RED + f"Could not find the CSV file at {data_path}. Please check the path and try again." + Style.RESET_ALL
-            )
+    try :
+        data = pd.read_csv(data_path)
+        return data
+    except FileNotFoundError:
+        raise FileNotFoundError(
+            Fore.RED + f"Could not find the CSV file at {data_path}. Please check the path and try again." + Style.RESET_ALL
+        )
 
 def save_model(
         model, 
