@@ -89,8 +89,8 @@ Install the following:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/Lahdhirim/NLP_financial_question_answering_tool.git
-    cd NLP_financial_question_answering_tool
+    git clone https://github.com/Lahdhirim/NLP-financial-question-answering-tool.git
+    cd NLP-financial-question-answering-tool
     ```
 
 2. Install dependencies:
